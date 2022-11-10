@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="二分类问题(x,y ) 表示某一个样本，y的取值是0|1  ,$X^n$表示n维的特征向量,训练集有m个样本$$(X^i，Y^i),…(X^m,Y^m)$$输入特征向量的维度（x1,x2,…,xm) ，所以是n * m 的矩阵 ，Y表示每个样本的预测结果$$X &#x3D;  [X^1,X^2,…,X^m]$$$$Y &#x3D; [Y^1,Y^2,…,Y^n]$$ logistic回归给定x的取值，求y&#x3D;1的条件概">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2022/11/10/network/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="二分类问题(x,y ) 表示某一个样本，y的取值是0|1  ,$X^n$表示n维的特征向量,训练集有m个样本$$(X^i，Y^i),…(X^m,Y^m)$$输入特征向量的维度（x1,x2,…,xm) ，所以是n * m 的矩阵 ，Y表示每个样本的预测结果$$X &#x3D;  [X^1,X^2,…,X^m]$$$$Y &#x3D; [Y^1,Y^2,…,Y^n]$$ logistic回归给定x的取值，求y&#x3D;1的条件概">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/123/AppData/Roaming/Typora/typora-user-images/image-20221109161303373.png">
+<meta property="og:image" content="https://images.gitbook.cn/31a064f0-811d-11e8-9614-476580d74a06">
+<meta property="article:published_time" content="2022-11-10T02:29:44.582Z">
+<meta property="article:modified_time" content="2022-11-10T13:06:36.750Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/123/AppData/Roaming/Typora/typora-user-images/image-20221109161303373.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-network" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/10/network/" class="article-date">
+  <time datetime="2022-11-10T02:29:44.582Z" itemprop="datePublished">2022-11-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="二分类问题"><a href="#二分类问题" class="headerlink" title="二分类问题"></a><strong>二分类问题</strong></h2><p>(x,y ) 表示某一个样本，y的取值是0|1  ,$X^n$表示n维的特征向量,训练集有m个样本<br>$$<br>(X^i，Y^i),…(X^m,Y^m)<br>$$<br>输入特征向量的维度（x1,x2,…,xm) ，所以是n * m 的矩阵 ，Y表示每个样本的预测结果<br>$$<br>X =  [X^1,X^2,…,X^m]<br>$$<br>$$<br>Y = [Y^1,Y^2,…,Y^n]<br>$$</p>
+<h2 id="logistic回归"><a href="#logistic回归" class="headerlink" title="logistic回归"></a><strong>logistic回归</strong></h2><p>给定x的取值，求y=1的条件概率 ，参数w是一个n维向量，b是常量，假设w和b已知</p>
+<p>$$<br>y = f(w^T + b)<br>$$<br>这里f 是sigmoid函数，将取值映射（0,1）<br>$$<br>sigmod=\frac{1}{1+e^{-z}}<br>$$</p>
+<p>cost funtion 寻找最合适的w和b</p>
+<p>一般的loss function shi是误差平方和，但在logistic回归（分类）中，我们使用的是<br>$$<br>-(y *lg\hat{ y} + (1-y)*log(1-\hat{y}))<br>$$<br>损失函数和是全体样本的cost function J(W,b)，minJ是我们的求解目标</p>
+<img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221109161303373.png" alt="image-20221109161303373" style="zoom:67%;" >
+
+<h3 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a><strong>梯度下降</strong></h3><p>梯度下降法为了最小化cost function，找到合适的w和b，logistic的cost function是凸函数，存在全局最小值，</p>
+<p>沿着梯度方向下降</p>
+<p>$$<br>repeat: w =  w - \alpha  \frac{dJ(w,b)}{dw}   b =  b - \alpha  \frac{dJ(w,b)}{db}<br>$$</p>
+<ul>
+<li><h5 id="单个样本的损失函数求导"><a href="#单个样本的损失函数求导" class="headerlink" title="单个样本的损失函数求导"></a>单个样本的损失函数求导</h5></li>
+</ul>
+<p>$$<br>z = W^TX+b<br>$$</p>
+<p>$$<br>a= sigmoid(z)<br>$$</p>
+<p>$$<br>L(a,y)=-y(log(a)+(1-y)log(1-a))<br>$$</p>
+<p>求损失函数L对于w的偏导数(打不出偏导数的符号) ,先求对z的偏导数<br>$$<br>\frac{\partial L(a,y)}{\partial z} = \frac{\partial L}{ \partial a} * \frac{\partial a}{\partial z}<br>$$</p>
+<p>$$<br>=(-\frac{y}{a}+\frac{1-y}{1-a} ) * (a-a^2) = a-y<br>$$</p>
+<p>如果我们的单个样本是2维的话，即z = w1<em>x1+w2</em>x2+b ，那么dL/dw1 = x1 * (a - y) </p>
+<p>在一次更新里面，对于单个样本进行更新 w1= w1- a* (dL/dw1),w2 = w2-a*(dL/dw2),</p>
+<p>d= d-a*(dL/dd)</p>
+<ul>
+<li><h5 id="推广到多个样本的测试集上"><a href="#推广到多个样本的测试集上" class="headerlink" title="推广到多个样本的测试集上"></a>推广到多个样本的测试集上</h5></li>
+</ul>
+<p>$$<br>\frac{\partial J}{ \partial w_1} = \frac{1}{m} \sum_{i=1}^{m}\frac{\partial L(a^{(i)},y^{(i)})}{\partial w_1}<br>$$</p>
+<p>这里的算法就是对m个样本对于w1的 偏导数之和 除以m（不同样本的损失函数 ，对于w1求偏导，再相加 ，然后除以m个样本，可以认为是成本函数在w1上的偏导数）</p>
+<p>完成一次所有参数的更新上，多次梯度下降，直到J到达某个阈值</p>
+<h3 id="向量化技术"><a href="#向量化技术" class="headerlink" title="向量化技术"></a>向量化技术</h3><p>减少显式的for循环  。。。。</p>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p><img src="https://images.gitbook.cn/31a064f0-811d-11e8-9614-476580d74a06" alt="img"></p>
+<p>可以看到在隐藏层他们经历了logistic的同样的过程，z=$W^T$X+b，然后通过sigmoid函数，结果作为隐藏层是输入和最后一层的输入。</p>
+<p>现在使用向量化技术就是矩阵乘法，将权重值表示为矩阵的形式。<br>$$<br>\left[\begin{matrix}W_{11}{ }W_{12}W_{13}\W_{21}W_{22} W_{23}\W_{31} W_{32} W_{33} \W_{41} W_{42}W_{43} \end{matrix}\right] * \left[<br> \begin{matrix}<br>      X_1 \X_2 \X_3<br>  \end{matrix}<br>  \right]+\vec{b}=Z^{[1]}<br>$$</p>
+<p>$$<br>sigmoid(Z^{[1]}) = a^{[2]}<br>$$</p>
+<p>图中的$X_1$,$X_2$,$X_3$ 是看做一个样本的特征矩阵，如何以矩阵乘法的方式实现神经网络的输入呢。<br>$$<br>\vec{X} = [\vec{X^{(1)}},\vec{X^{(2)}},…,\vec{X^{(m)}}]<br>$$<br>输入的矩阵是一个n<em>m的矩阵，如果隐藏层是一个k * n 的矩阵，$W^T$X+b得到的隐藏层的输出矩阵，是k</em>m的</p>
+<p>可以认为之前的n维特征变成k维的了。</p>
+<h4 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h4><p>sigmoid函数（二分类的输出层） ；</p>
+<p>tanh函数（应用于隐藏层）（better） ；</p>
+<p>（ 这两个函数在自变量很大的时候变化率很小，会导致梯度下降变慢；）</p>
+<p>修正线性单元 （ReLU)，也是如果不知道隐藏层用什么的选择。</p>
+<p>leaky ReLU</p>
+<p>为什么必须使用非线性函数作为激活函数？</p>
+<p>这么做其实只是将输入的特征值经过线性组合再次输出。</p>
+<h4 id="神经网络的的梯度下降法"><a href="#神经网络的的梯度下降法" class="headerlink" title="神经网络的的梯度下降法"></a>神经网络的的梯度下降法</h4><p>复习一下正向传播的公式<br>$$<br>第一层 Z^{[1]} =W^{[1]}X + b^{[1]}<br>$$</p>
+<p>$$<br>第一层的输出 A^{[1]} = g^{[1]} (Z^{[1]})<br>$$</p>
+<p>$$<br>第二层  Z^{[2]} =W^{[2]}A^{[1]} + b^{[2]}<br>$$</p>
+<p>$$<br>第二层的输出 A^{[2]} = g^{[2]} (Z^{[2]})<br>$$</p>
+<p>这里以sigmoid 函数为例，介绍一下反向传播的公式的计算</p>
+<p>这里是第一次，整个网络中的W和b都是初始化的，我们</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/10/network/" data-id="clab3egdu00001cuv46gybsvo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/11/10/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/11/10/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/10/network/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/10/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
