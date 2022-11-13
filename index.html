@@ -145,6 +145,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/13/python%20%E4%BF%A1%E5%8F%B7%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/13/python%20%E4%BF%A1%E5%8F%B7%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-13 14:39:32 / Modified: 17:14:49" itemprop="dateCreated datePublished" datetime="2022-11-13T14:39:32+08:00">2022-11-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="小波信号处理"><a href="#小波信号处理" class="headerlink" title="小波信号处理"></a>小波信号处理</h1><p>傅里叶信号对于频率的时间变化无能为力。</p>
+<p>短时（加窗）傅里叶变换，固定窗口的局限。</p>
+<h2 id="小波变换"><a href="#小波变换" class="headerlink" title="小波变换"></a>小波变换</h2><p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113150549084.png" alt="image-20221113150549084"></p>
+<p>小波母函数中的a是尺度函数（控制伸缩），b是位移函数</p>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113150716790.png" alt="image-20221113150716790"></p>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113150951714.png" alt="image-20221113150951714"></p>
+<p>使用小波母函数（尺度函数变化）和原始信号在整个时间轴上进行卷积。</p>
+<p>如果对于连续的尺度函数计算的话会造成不必要的浪费，因此我们可以对a,b选取一些离散的点，也就是离散小波变化，具体包括：</p>
+<ul>
+<li>冗余小波变换</li>
+<li>多分辨分析</li>
+</ul>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113152316835.png" alt="image-20221113152316835"></p>
+<p>Mallet和Meyer提出的多分辨分析：将信号分别通过高通滤波器，下采样（隔2）得到细节系数，通过低通滤波器下采样（隔2）得到近似系数。</p>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113152628050.png" alt="image-20221113152628050"></p>
+<p>分解低频信号,当我们一直对低频分量进行分解，CD1是一次分解高频分量的系数，。。。。CA3是第三层分解的高维系数。</p>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113152723873.png" alt="image-20221113152723873"></p>
+<p>逆小波变换也是拿系数和共轭滤波器重构信号。</p>
+<p>小波母函数的选择</p>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113152922464.png" alt="image-20221113152922464"></p>
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113153003850.png" alt="image-20221113153003850"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pywt</span><br><span class="line"></span><br><span class="line">x = [<span class="number">3</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">1</span>,-<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用haar小波分析进行离散小波分析</span></span><br><span class="line">cA,cD= pywt.dwt(x,<span class="string">&#x27;haar&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    (cA, cD) : tuple</span></span><br><span class="line"><span class="string">        Approximation and detail coefficients.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#离散小波变换的逆变换</span></span><br><span class="line">y =pywt.idwt(cA,cD,<span class="string">&#x27;haar&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(pywt.wavelist())</span><br><span class="line"><span class="comment">#多分辨分析</span></span><br><span class="line">coeffs=pywt.wavedec(x,<span class="string">&#x27;db1&#x27;</span>,level=<span class="number">3</span>)</span><br><span class="line"><span class="comment">#重构</span></span><br><span class="line">y =pywt.waverec(coeffs,<span class="string">&#x27;db1&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure>
+
+<h2 id="信号去噪"><a href="#信号去噪" class="headerlink" title="信号去噪"></a>信号去噪</h2><p>小波软阈值去噪和硬阈值去噪，这里给出了一个心电图信号加上高斯白噪声然后去噪的例子。</p>
+<p>目前python 小波包工具只有两种去噪函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>  numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span>  pywt</span><br><span class="line"><span class="keyword">from</span> skimage.restoration <span class="keyword">import</span> denoise_wavelet</span><br><span class="line"><span class="keyword">import</span>  matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = pywt.data.ecg().astype(<span class="built_in">float</span>)/<span class="number">256</span></span><br><span class="line">x = x/<span class="built_in">max</span>(x) <span class="comment">#有时候幅度变化大需要我们归一化</span></span><br><span class="line">sigma= <span class="number">0.5</span> <span class="comment">#噪声方差</span></span><br><span class="line">x_noise=x+np.random.rand(x.size)*sigma</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x_denoise=denoise_wavelet(x_noise,method=<span class="string">&quot;BayesShrink&quot;</span>,mode=<span class="string">&quot;soft&quot;</span>,wavelet_levels=<span class="number">3</span>,wavelet=<span class="string">&quot;sym8&quot;</span>,rescale_sigma=<span class="string">&quot;True&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>,<span class="number">10</span>),dpi=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(x_noise)<span class="comment">#蓝色表示添加高斯噪声的信号</span></span><br><span class="line">plt.plot(x_denoise)<span class="comment">#橙色表示去噪后</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\123\AppData\Roaming\Typora\typora-user-images\image-20221113170042935.png" alt="image-20221113170042935"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/11/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -478,7 +564,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
